@@ -1,0 +1,47 @@
+#!/usr/bin/python
+
+
+"""
+Your mapper function should print out 10 lines containing longest posts, sorted in
+ascending order from shortest to longest.
+Please do not use global variables and do not change the "main" function.
+"""
+
+
+import sys
+import csv
+
+'''
+def mapper():
+    reader = csv.reader(sys.stdin, delimiter='\t')
+    writer = csv.writer(sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
+
+    newList = [] # Define a new list with each of the numbers as a vector element
+    
+    
+    for line in reader: # Populate that list with vector elements
+	newList.append([len(line[4]),line]) # append length line and line
+	TopN = sorted(newList,reverse=True)[0:10] # sort newList in DESC & pick the top 10
+	TopN = sorted(TopN,reverse=False) # sort newList in ASC
+    for record in TopN: #make a new list
+	writer.writerow(record[1])
+'''
+
+def mapper():
+    reader = csv.reader(sys.stdin, delimiter='\t')
+    writer = csv.writer(sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
+
+    for line in reader:
+	# In this exercise, we are interested in the field 'body' (which is the 5th field, line[4])
+	body = line[4]
+	# count the number of forum nodes where 'body' either contains none of the three punctuation marks: period ('.'), exclamation point ('!'), question mark ('?')
+	contains = body.count('.') + body.count('!') + body.count('?')
+	if contains == 0:
+		writer.writerow(line)
+	if contains == 1:
+		if body.endswith('.') or body.endswith('!') or body.endswith('?'):
+			writer.writerow(line)
+	
+	# or else 'body' contains exactly one such punctuation mark as the last character.
+	# There is no need to parse the HTML inside 'body'. Also, do not pay special attention to newline characters.         
+
